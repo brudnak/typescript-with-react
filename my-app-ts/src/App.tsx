@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import './App.css';
-import { tsModuleDeclaration } from '@babel/types';
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 
@@ -30,6 +29,13 @@ const App = (): JSX.Element => {
     setTodos(newTodos);
   };
 
+  const removeTodo = (index: number): void => {
+    console.log(index);
+    const newTodos: ITodo[] = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
   return (
     <Fragment>
       <h1>Todo List</h1>
@@ -45,9 +51,16 @@ const App = (): JSX.Element => {
       <section>
         {todos.map((todo: ITodo, index: number) => (
           <Fragment key={index}>
-            <div>{todo.text}</div>
+            <div
+              style={{ textDecoration: todo.complete ? 'line-through' : '' }}
+            >
+              {todo.text}
+            </div>
             <button type='button' onClick={() => completeTodo(index)}>
               {todo.complete ? 'Incomplete' : 'Comlete'}
+            </button>
+            <button type='button' onClick={() => removeTodo(index)}>
+              &times;
             </button>
           </Fragment>
         ))}
