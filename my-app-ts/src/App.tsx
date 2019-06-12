@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import './App.css';
+import { tsModuleDeclaration } from '@babel/types';
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 
 interface ITodo {
   text: string;
-  comlete: boolean;
+  complete: boolean;
 }
 
 const App = (): JSX.Element => {
@@ -18,12 +19,17 @@ const App = (): JSX.Element => {
     setValue('');
   };
 
-  const addTodo = (text: string) => {
-    const newTodos: ITodo[] = [...todos, { text, comlete: false }];
+  const addTodo = (text: string): void => {
+    const newTodos: ITodo[] = [...todos, { text, complete: false }];
     setTodos(newTodos);
   };
 
-  console.log(todos);
+  const completeTodo = (index: number): void => {
+    const newTodos: ITodo[] = [...todos];
+    newTodos[index].complete = !newTodos[index].complete;
+    setTodos(newTodos);
+  };
+
   return (
     <Fragment>
       <h1>Todo List</h1>
@@ -38,7 +44,12 @@ const App = (): JSX.Element => {
       </form>
       <section>
         {todos.map((todo: ITodo, index: number) => (
-          <div key={index}>{todo.text}</div>
+          <Fragment key={index}>
+            <div>{todo.text}</div>
+            <button type='button' onClick={() => completeTodo(index)}>
+              {todo.complete ? 'Incomplete' : 'Comlete'}
+            </button>
+          </Fragment>
         ))}
       </section>
     </Fragment>
