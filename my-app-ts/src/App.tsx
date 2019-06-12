@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
 
-function App() {
+const App = (): JSX.Element => {
   return (
-    <div className='App'>
-      <h1>Hello from App.tsx</h1>
-    </div>
+    <Fragment>
+      <h1>Todo List</h1>
+      <form>
+        <input type='text' required />
+        <button type='submit'>Add Todo</button>
+      </form>
+    </Fragment>
   );
-}
+};
 
 export default App;
